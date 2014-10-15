@@ -18,33 +18,39 @@
 ;REGISTERS        R0    R1    R2    R3    R4    R5    R6    R7
 ;
 ;PRE-LOOP         0     32767 0     0     0     0     0     1168
-;ITERATION 1      0     5     8     0     0     0     0     1168
-;ITERATION 2      0     4     8     8     0     0     0     1168
-;ITERATION 3      0     3     8     16    0     0     0     1168
-;ITERATION 4      0     2     8     24    0     0     0     1168
-;ITERATION 5      0     1     8     32    0     0     0     1168
+;ITERATION 1      0     0     12    6     0     0     0     1168
+;ITERATION 2      0     12    12    5     0     0     0     1168
+;ITERATION 3      0     24    12    4     0     0     0     1168
+;ITERATION 4      0     36    12    3     0     0     0     1168
+;ITERATION 5      0     48    12    2     0     0     0     1168
+;ITERATION 5      0     60    12    1     0     0     0     1168
+;ITERATION 6      0     72    12    0     0     0     0     DEC_0
 ;
-;END OF PROGRAM   0     0     8     40    0     0     0     DEC_0
+;END OF PROGRAM   0     72    12    0     0     0     0     DEC_0
 ;---
 
-.ORIG x3000                   ;PROGRAM BEGINS HERE
-;---
-;INSTRUCTIONS
-;---
-LD R1, DEC_5                  ;R1 = DEC_5 => 5
-LD R2, DEC_8                  ;R2 = DEC_8 => 8
-LD R3, DEC_0                  ;R3 = DEC_0 => 0
 
-DO_WHILE    ADD R3, R3, R2    ;R3 = R3 + R2
-            ADD R1, R1, #-1   ;R1 = R1 - 1
-            BRp DO_WHILE      ;WILL KEEP LOOPING UNTILL R1 EQUALS 0 (OR NOT POSITIVE)
+.ORIG x3000                 ;PROGRAM BEGINS HERE
+   ;----------------------
+   ;Instructions
+   ;----------------------
+   LD R1, DEC_0      ;R1, <-- #0
+   LD R2, DEC_12     ;R2, <-- #12
+   LD R3, DEC_6      ;R3, <-- #6
 
-HALT
-;---
-;DATA
-;---
-DEC_0    .FILL #0             ;DEC_0   = 0
-DEC_5    .FILL #5             ;DEC_5   = 6
-DEC_8    .FILL #8             ;DEC_8   = 12
+   DO_WHILE_LOOP;
+      ADD R1, R1, R2    ;R1 <-- R1 = R2
+      ADD R3, R3, #-1   ;R3 <-- R3 + (#-1) AKA (R3 - 1)
+      BRp DO_WHILE_LOOP ;  if (R3 > 0): goto DO_WHILE_LOOP
+   END_DO_WHILE_LOOP
 
-.END                          ;PROGRAM ENDS HERE
+   HALT
+   ;---
+   ;LOCAL DATA
+   ;---
+   DEC_0 .FILL #0    ;PUT #0 INTO MEMORY HERE
+   DEC_12 .FILL #12  ;PUT #12 INTO MEMORY HERE
+   DEC_6 .FILL #6    ;PUT #6 INTO MEMORY HERE
+
+
+.END
