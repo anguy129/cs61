@@ -12,4 +12,17 @@
 ;=================================================
 
 
+.ORIG x3000    ;PROGRAM BEGINS HERE
+   ;---
+   ;INSTRUCTIONS
+   ;---
+   TRAP x20
+   TRAP x21
 
+   HALT
+   ;---
+   ;LOCAL DATA
+   ;---
+
+
+.END
