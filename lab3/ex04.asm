@@ -18,8 +18,8 @@
    ;----------------------
    LEA R0, INPUT
    PUTS
-   LD R1, COUNT
-   LD R3, NEWLINE
+   LD R1, COUNT         ;COUNTS THE INPUT AMOUNTS
+   LD R3, NEWLINE       ;NEWLINE CHARACTER TO SEPARATE THE INPUTS AS INSTRUCTED IN SPECS
    
    
    LD R2, LOCATION
@@ -47,6 +47,9 @@
       LDR R0, R2, #0
       OUT
       ADD R2, R2, #1
+
+      LD R0, NEWLINE
+      OUT
 
       ADD R1, R1, #-1
       BRp OUT_LOOP
