@@ -27,12 +27,20 @@
       TRAP x20          ;GETC
       STR R0, R2, #0
       ADD R2, R2, #1
+      ADD R1, R1, #1
 
-      ADD R1, R1, #-1
+
+      LD R5, ENTER
+      NOT R6, R6
+      ADD R6, R6, #1
+      
+      ADD R6, R6, R0
+
+      ;ADD R1, R1, #-1
+      BRz END_LOOP
       BRp LOOP
    END_LOOP
 
-   LD R1, COUNT
    LD R2, LOCATION
    OUT_LOOP
       ;LDR R4, R2, #0
@@ -48,12 +56,13 @@
    ;---
    ;LOCAL DATA
    ;---
-   COUNT    .FILL       #10
-   INPUT    .STRINGZ    "Enter 10 characters:\n"
+   COUNT    .FILL       #0
+   INPUT    .STRINGZ    "Enter 10 characters (Press Enter Key When Done):\n"
    NEWLINE  .STRINGZ    "\n"
    LOCATION .FILL       x4000
+   ENTER    .FILL       #10
    
    .ORIG x4000
-   .BLKW #10
+   .BLKW #64         ;Chose 64 for LC3 similarity
 
 .END
