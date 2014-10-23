@@ -31,21 +31,22 @@
 
 
       LD R5, ENTER
-      NOT R6, R6
-      ADD R6, R6, #1
+      NOT R5, R5
+      ADD R5, R5, #1
       
-      ADD R6, R6, R0
+      ADD R5, R5, R0
 
       ;ADD R1, R1, #-1
       BRz END_LOOP
-      BRp LOOP
+      BRnp LOOP
    END_LOOP
 
    LD R2, LOCATION
    OUT_LOOP
       ;LDR R4, R2, #0
+
       LDR R0, R2, #0
-      OUT
+      TRAP x21
       ADD R2, R2, #1
 
       LD R0, NEWLINE
@@ -66,6 +67,6 @@
    ENTER    .FILL       #10
    
    .ORIG x4000
-   .BLKW #64         ;Chose 64 for LC3 similarity
+            .BLKW #100
 
 .END
