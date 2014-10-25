@@ -33,70 +33,71 @@
          ADD R2, R2, R2    ;left shift by adding number to itself
          ADD R3, R3, #-1   ;reduce COUNT aka the 16 bit count
 
-         LD R0, SPACE1
-         ADD R0, R0, R3
-         BRz PRINT_SPACE
+         LD R0, SPACE1     ;load R0 with space1 label
+         ADD R0, R0, R3    ;add count & space1
+         BRz PRINT_SPACE   ;if R0 is zero, go to PRINT_SPACE function to print space
 
-         LD R0, SPACE2
-         ADD R0, R0, R3
-         BRz PRINT_SPACE
+         LD R0, SPACE2     ;load R0 with space2 label
+         ADD R0, R0, R3    ;add count & space2
+         BRz PRINT_SPACE   ;if R0 is zero, go to PRINT_SPACE function to print space
 
-         LD R0, SPACE3
-         ADD R0, R0, R3
-         BRz PRINT_SPACE
+         LD R0, SPACE3     ;load R0 with space3 label
+         ADD R0, R0, R3    ;add count & space3
+         BRz PRINT_SPACE   ;if R0 is zero, go to PRINT_SPACE function to print space
 
          ADD R3, R3, #0
          BRp LOOP          ;goes back to begining of loop is NUM is positive
          BRnz END_LOOP     ;goes to end of loop is NUM is zero or negative
       END_PRINT_ZERO
 
-      PRINT_ONE
-         LD R0, NUM_ZERO
-         TRAP x21
-         ADD R2, R2, R2
-         ADD R3, R3, #-1
+      PRINT_ONE            ;loop to print zero is positive
 
-         LD R0, SPACE1
-         ADD R0, R0, R3
-         BRz PRINT_SPACE
+         LD R0, NUM_ZERO   ;load #48, which is 0, to R0
+         TRAP x21          ;prints out R0 = 0
+         ADD R2, R2, R2    ;left shift by adding number to its
+         ADD R3, R3, #-1   ;reduce COUNT aka the 16 bit count
 
-         LD R0, SPACE2
-         ADD R0, R0, R3
-         BRz PRINT_SPACE
+         LD R0, SPACE1     ;load R0 with space1 label
+         ADD R0, R0, R3    ;add count & space1
+         BRz PRINT_SPACE   ;if R0 is zero, go to PRINT_SPACE function to print space
 
-         LD R0, SPACE3
-         ADD R0, R0, R3
-         BRz PRINT_SPACE
+         LD R0, SPACE2     ;load R0 with space2 label
+         ADD R0, R0, R3    ;add count & space2
+         BRz PRINT_SPACE   ;if R0 is zero, go to PRINT_SPACE function to print space
+
+         LD R0, SPACE3     ;load R0 with space3 label
+         ADD R0, R0, R3    ;add count & space3
+         BRz PRINT_SPACE   ;if R0 is zero, go to PRINT_SPACE function to print space
 
          ADD R3, R3, #0
-         BRzp LOOP
-         BRnz END_LOOP
+         BRp LOOP         ;goes back to begining of loop is NUM is positive
+         BRnz END_LOOP     ;goes to end of loop is NUM is zero or negative
       END_PRINT_ONE
 
-      PRINT_SPACE
-         LD R0, SPACE_CHAR
-         TRAP x21
-         ADD R3, R3, #0
-         BRzp LOOP
-         BRnz END_LOOP
+      PRINT_SPACE          ;function to print out a space ONLY BETWEEN every 4 bits
+         LD R0, SPACE_CHAR ;loads a space character into R0 for output
+         TRAP x21          ;outputs the space character
+         ADD R3, R3, #0    ;makes R3 LMR to check for loop iteration
+         BRp LOOP         ;if its positive, enter loop again
+         BRnz END_LOOP     ;if its negative or zero, exit loop, the HALT program
       END_PRINT_SPACE
 
-   END_LOOP
+   END_LOOP                ;END LOOP
 
-   HALT
+   HALT                    ;HALT program
    ;---
    ;LOCAL DATA
    ;---
-   NUM_DEC     .STRINGZ    "The Number 32767 In Binary Is:\n"
+   NUM_DEC     .STRINGZ    "The Hexademical representation of xABCD In Binary Is:\n"
    SPACE_CHAR  .STRINGZ    " "
 
-   NUM         .FILL       xABAB
+   NUM         .FILL       xABCD
    NUM_ONE     .FILL       #48
    NUM_ZERO    .FILL       #49
-   COUNT       .FILL       #15
-   SPACE1      .FILL       #-3
-   SPACE2      .FILL       #-7
-   SPACE3      .FILL       #-11
+   COUNT       .FILL       #16
+   SPACE1      .FILL       #-4
+   SPACE2      .FILL       #-8
+   SPACE3      .FILL       #-12
 
 
 .END
