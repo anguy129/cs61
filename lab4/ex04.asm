@@ -14,10 +14,11 @@
    ;----------------------
 
    LD R5, COUNT3
+   LD R6, ADD_NUM
 
    LOOP3
-      LD R3, COUNT2
       LD R1, LOCATION
+      LD R3, COUNT2
       LOOP1
          LDR R2, R1, #0
 
@@ -54,7 +55,7 @@
       LD R3, COUNT            ;Holds count for loop for 16 times(aka 16-bits)   
       ;Puts number 32767 into R0
       LD R4, LOCATION
-      ADD R4, R4, #0
+      ADD R4, R4, R6
       LDR R2, R4, #0
 
       LOOP
@@ -118,6 +119,8 @@
          END_PRINT_SPACE
 
       END_LOOP                ;END LOOP
+      
+      ADD R6, R6, #1
 
       ADD R5, R5, #-1
       BRp LOOP3
@@ -130,10 +133,11 @@
    ;---
    ;LOCAL DATA
    ;---
-   NUM_DEC     .STRINGZ    "The Hexademical representation of xABCD In Binary Is:\n"
+   NUM_DEC     .STRINGZ    "\n"
    SPACE_CHAR  .STRINGZ    " "
    LETTER      .STRINGZ    "b"
 
+   ADD_NUM     .FILL       #0
    NUM         .FILL       xABCD
    NUM_ONE     .FILL       #48
    NUM_ZERO    .FILL       #49
