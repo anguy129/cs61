@@ -2,7 +2,7 @@
 ; Name: <Goshtasbi, Rashid>
 ; Username: rgosh001
 ; 
-; Lab: <lab 5, Exercise 1>
+; Lab: <lab 5, Exercise 2>
 ; Lab section: 023
 ; TA: Bryan Marsh
 ; 
