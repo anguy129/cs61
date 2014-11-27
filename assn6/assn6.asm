@@ -2,7 +2,7 @@
 ; Name: <Goshtasbi, Rashid>
 ; Username: rgosh001
 ; 
-; Assignment name: <assn 5>
+; Assignment name: <assn 6>
 ; Lab section: 023
 ; TA: Bryan Marsh
 ; 
@@ -169,13 +169,13 @@
       BACKUP_R5_3100 .BLKW #1
       BACKUP_R6_3100 .BLKW #1
       BACKUP_R7_3100 .BLKW #1
-      MENU1    .STRINGZ    "1. SEE IF ALL MACHINES ARE BUSY\n"
-      MENU2    .STRINGZ    "2. SEE IF ALL MACHIENS ARE FREE\n"
-      MENU3    .STRINGZ    "3. NUMBER OF FREE MACHINES\n"
-      MENU4    .STRINGZ    "4. NUMBER OF BUSY MACHINES\n"
-      MENU5    .STRINGZ    "5. STATUS OF MACHINE N\n"
-      MENU6    .STRINGZ    "6. FIRST AVAILABLE MACHINE\n"
-      MENU7    .STRINGZ    "7. QUIT\n"
+      MENU1          .STRINGZ    "1. SEE IF ALL MACHINES ARE BUSY\n"
+      MENU2          .STRINGZ    "2. SEE IF ALL MACHIENS ARE FREE\n"
+      MENU3          .STRINGZ    "3. NUMBER OF FREE MACHINES\n"
+      MENU4          .STRINGZ    "4. NUMBER OF BUSY MACHINES\n"
+      MENU5          .STRINGZ    "5. STATUS OF MACHINE N\n"
+      MENU6          .STRINGZ    "6. FIRST AVAILABLE MACHINE\n"
+      MENU7          .STRINGZ    "7. QUIT\n"
       .END
 
 ;---------------------------------------------------------------------------------   
