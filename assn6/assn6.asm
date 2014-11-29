@@ -1,4 +1,4 @@
-;=================================================
+;================================================
 ; Name: <Goshtasbi, Rashid>
 ; Username: rgosh001
 ; 
@@ -21,7 +21,6 @@
          JSRR R2
          
          TRAP x20          ;get user input
-         ;TRAP x21          ;outputs user input
 
          LD R3, CONVERT    ;convert input to decimal'
          NOT R3, R3
@@ -299,7 +298,7 @@
       LD R2, EMPTY11
 
       LD R3, COUNT1
-      LOOP1
+      LOOP2
          ADD R1, R1, #0
          BRn NEG1
          BRp POS1
@@ -323,7 +322,7 @@
             BR END_END
 
          ADD R3, R3, #-1
-         BRp LOOP1
+         BRp LOOP2
          BRnz END_CHECK1
          END_CHECK1
             ADD R2, R2, #0
@@ -381,10 +380,10 @@
 
    ;(2) Subroutine's algorithm
       ;0 means busy, 1 means free
-      LD R2, EMPTY11
+      LD R2, EMPTY12
 
-      LD R3, COUNT1
-      LOOP1
+      LD R3, COUNT2
+      LOOP3
          ADD R1, R1, #0
          BRn NEG1
          BRp POS1
@@ -400,23 +399,12 @@
          LAST1
          ADD R1, R1, R1
 
-         ADD R2, R2, #0
-         BRp NOT_ALL_FREE
-         NOT_ALL_FREE
-            LEA R0, NOT_FREE
-            TRAP x22
-            BR END_END
-
          ADD R3, R3, #-1
-         BRp LOOP1
-         BRnz END_CHECK1
-         END_CHECK1
-            ADD R2, R2, #0
-            BRp ALL_FREE_PROMPT
-            ALL_FREE_PROMPT
-               LEA R0, ALL_FREE
-               TRAP x22
+         BRp LOOP3
+         BRnz END_END1
       END_END1
+
+
 
 
    ;(3) Restore Registers
@@ -442,8 +430,8 @@
       BACKUP_R6_3400 .BLKW #1
       BACKUP_R7_3400 .BLKW #1
       NUM_BUSY       .STRINGZ    "\nCHOICE 2: Number of machines busy is \n"
-      COUNT1          .FILL #15
-      EMPTY11         .FILL #0
+      COUNT2          .FILL #15
+      EMPTY12         .FILL #0
       .END
 
 ;---------------------------------------------------------------------------------   
