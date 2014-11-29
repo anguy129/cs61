@@ -403,7 +403,6 @@
       
       LD R2, SUB_EMPTY
       LD R3, SUB_EMPTY
-      LD R4, SUB_EMPTY
       LD R5, SUB_EMPTY
       LD R6, SUB_EMPTY
       LD R3, TEN_T
@@ -421,8 +420,15 @@
 
       LD R3, SUB_CONVERT
       LD R0, SUB_EMPTY
-      ADD R0, R2, R3
-      OUT
+      LD R4, SUB_EMPTY
+      ADD R4, R2, #0
+      BRp PRINT0
+      BRz SKIP0
+      PRINT0
+         ADD R0, R2, R3
+         OUT
+
+      SKIP0
 
       LD R2, SUB_EMPTY
 
@@ -441,8 +447,18 @@
 
       LD R3, SUB_CONVERT
       LD R0, SUB_EMPTY
-      ADD R0, R2, R3
-      OUT
+      ADD R4, R4, #0
+      BRp PRINT
+      BRz CHECK1
+      CHECK1
+         ADD R4, R2, #0
+         BRp PRINT
+         BRz SKIP2
+      PRINT
+         ADD R0, R2, R3
+         OUT
+
+      SKIP2
 
       LD R2, SUB_EMPTY
 
@@ -461,9 +477,19 @@
 
       LD R3, SUB_CONVERT
       LD R0, SUB_EMPTY
-      ADD R0, R2, R3
-      OUT
-      
+      ADD R4, R4, #0
+      BRp PRINT1
+      BRz CHECK2
+      CHECK2
+         ADD R4, R2, #0
+         BRp PRINT1
+         BRz SKIP3
+      PRINT1
+         ADD R0, R2, R3
+         OUT
+
+      SKIP3
+
       LD R2, SUB_EMPTY
 
       LD R3, TENS
@@ -481,8 +507,18 @@
 
       LD R3, SUB_CONVERT
       LD R0, SUB_EMPTY
-      ADD R0, R2, R3
-      OUT
+      ADD R4, R4, #0
+      BRp PRINT2
+      BRz CHECK3
+      CHECK3
+         ADD R4, R2, #0
+         BRp PRINT2
+         BRz SKIP4
+      PRINT2
+         ADD R0, R2, R3
+         OUT
+
+      SKIP4
 
       LD R2, SUB_EMPTY
 
@@ -501,8 +537,18 @@
 
       LD R3, SUB_CONVERT
       LD R0, SUB_EMPTY
-      ADD R0, R2, R3
-      OUT
+      ADD R4, R4, #0
+      BRp PRINT3
+      BRz CHECK4
+      CHECK4
+         ADD R4, R2, #0
+         BRp PRINT3
+         BRz SKIP5
+      PRINT3
+         ADD R0, R2, R3
+         OUT
+
+      SKIP5
 
    ;(3) Restore Registers
       LD R2, BACKUP_R2_2800
