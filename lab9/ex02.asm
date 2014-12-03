@@ -2,7 +2,7 @@
 ; Name: <Goshtasbi, Rashid>
 ; Username: rgosh001
 ; 
-; Lab: <lab 9, Exercise 1>
+; Lab: <lab 9, Exercise 2>
 ; Lab section: 023
 ; TA: Bryan Marsh
 ; 
@@ -12,22 +12,29 @@
    ;----------------------
    ;Instructions
    ;----------------------
-      LD R6, INPUT_SUB
-      JSRR R6
+      LEA R0, INPUT_PROMPT
+      TRAP x22
 
       LD R1, ARRAY
       LD R2, ARRAY
       ADD R3, R3, #4
 
       LOOP
-         LD R6, SUB_STACK_PUSH
-         JSRR R6
-
          LD R6, INPUT_SUB
          JSRR R6
 
+         LD R6, SUB_STACK_PUSH
+         JSRR R6
+
+         ADD R3, R3, #0
+         BRz POP_ARRAY
          BR LOOP
       END_LOOP
+
+      POP_ARRAY
+         LD R6, SUB_STACK_POP 
+         JSRR R6
+      END_POP_ARRAY
 
 
       HALT
@@ -35,8 +42,10 @@
    ;---
    ;LOCAL DATA
    ;---
+      INPUT_PROMPT      .STRINGZ    "Please Enter 4 Numbers (5 Digits MAX) Followed By Enter To Test POP: "
       INPUT_SUB         .FILL    x3100
       SUB_STACK_PUSH    .FILL    x3300
+      SUB_STACK_POP     .FILL    x3400
       ARRAY             .FILL    x4000
 
 ;---------------------------------------------------------------------------------   
@@ -59,9 +68,6 @@
    ;(2) Subroutine's algorithm
 
    START
-      LEA R0, INPUT_PROMPT
-      TRAP x22
-
       LD R1, EMPTY            ;initialize R1 to 0
       LD R3, EMPTY            ;for neg number
 
@@ -193,7 +199,6 @@
       BACKUP_R5_3100 .BLKW #1
       BACKUP_R6_3100 .BLKW #1
       BACKUP_R7_3100 .BLKW #1
-      INPUT_PROMPT   .STRINGZ    "Please Enter A Number (5 Digits MAX), Followed By Enter: "
       EMPTY    .FILL       #0
       NEG      .FILL       #45
       ERROR       .STRINGZ    "\nError: Only input +/- sign with 1-5 digits only. Please Try Again\n"
@@ -224,20 +229,9 @@
                         ST R7, BACKUP_R7_3300
 
    ;(2) Subroutine's algorithm
-      ADD R3, R3, #0
-      BRz OVERFLOW
-      BRp PUSH_TO_ARRAY
-      OVERFLOW
-         LEA R0, OVERFLOW_PROMPT
-         TRAP x22
-         HALT
-      END_OVERFLOW
-
-      PUSH_TO_ARRAY
-         STR R0, R2, #0
-         ADD R2, R2, #1
-         ADD R3, R3, #-1
-      END_PUSH_TO_ARRAY
+      STR R0, R2, #0
+      ADD R2, R2, #1
+      ADD R3, R3, #-1
 
    ;(3) Restore Registers
       LD R0, BACKUP_R0_3300
@@ -257,6 +251,41 @@
       BACKUP_R5_3300 .BLKW #1
       BACKUP_R6_3300 .BLKW #1
       BACKUP_R7_3300 .BLKW #1
-      OVERFLOW_PROMPT   .STRINGZ "OVERFLOW: Array At Capacity\n"
+      
+.END
+;---------------------------------------------------------------------------------   
+   ;---
+   ; SUBROUTINE #2 - SUB_STACK_POP
+   ;---
+
+.ORIG x3400    ;PROGRAM BEGINS HERE
+   ;SUBROUTINE INSTRUCTIONS
+   ;(1) Backup R7 & any registers the subroutine changes except Return Values
+      SUB_GET_STRING    ST R0, BACKUP_R0_3400
+                        ST R1, BACKUP_R1_3400
+                        ST R4, BACKUP_R4_3400
+                        ST R6, BACKUP_R6_3400
+                        ST R7, BACKUP_R7_3400
+
+   ;(2) Subroutine's algorithm
+
+   ;(3) Restore Registers
+      LD R0, BACKUP_R0_3400
+      LD R1, BACKUP_R1_3400
+      LD R4, BACKUP_R4_3400
+      LD R5, BACKUP_R5_3400
+      LD R6, BACKUP_R6_3400
+      LD R7, BACKUP_R7_3400
+
+   ;(4) Return
+      RET
+   
+   ;(5) Subroutine Data
+      BACKUP_R0_3400 .BLKW #1
+      BACKUP_R1_3400 .BLKW #1
+      BACKUP_R4_3400 .BLKW #1
+      BACKUP_R5_3400 .BLKW #1
+      BACKUP_R6_3400 .BLKW #1
+      BACKUP_R7_3400 .BLKW #1
       
 .END
